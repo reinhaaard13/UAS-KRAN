@@ -1,0 +1,37 @@
+Barbershop
+
+tabel
+
+- admin
+username
+pass
+
+- customer
+id
+nama
+no hp
+exp
+
+- barber
+id
+nama
+no hp
+alamat
+exp
+
+- produk
+kd_produk
+nama produk
+harga
+jumlah
+
+- layanan
+kd_layanan
+nama layanan
+harga
+
+- booking
+nama
+no_telp
+waktu
+pesan

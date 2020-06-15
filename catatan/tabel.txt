@@ -1,0 +1,30 @@
+USER
+- id (a_i)
+- username = varchar(100)
+- password = varchar(200)
+
+CUSTOMER
+- id (a_i)
+- nama = text(100)
+- no_telp = varchar(15)
+- birth
+- exp = int
+
+BARBER
+- id (a_i)
+- nama = text(100)
+- no_telp = varchar(15)
+- alamat = varchar(100)
+- exp = int
+
+INVENTORY
+- id (a_i) = int
+- nama_produk = varchar(50)
+- harga = int
+
+BOOKING
+- id (a_i) = int
+- nama = text(100)
+- no_telp = varchar(15)
+- date
+- pesan = varchar(200)
