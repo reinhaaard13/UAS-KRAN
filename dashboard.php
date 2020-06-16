@@ -61,10 +61,10 @@ $customer = query("SELECT * FROM customer");
                             Attendance
                         </a>
                         <div class="sb-sidenav-menu-heading">Database</div>
-                        <a class="nav-link" href="customer.php">
+                        <a class="nav-link" href="customer">
                             <div class="sb-nav-link-icon"><i class="fas fa-address-card"></i></div>
                             Customer
-                        </a><a class="nav-link" href="barber.php">
+                        </a><a class="nav-link" href="barber">
                             <div class="sb-nav-link-icon"><i class="fas fa-id-card-alt"></i></div>
                             Barber
                         </a>
