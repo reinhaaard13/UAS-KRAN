@@ -269,7 +269,7 @@
                     <div class="col-lg-4 my-3 my-lg-0">
                         <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a><a class="btn btn-dark btn-social mx-2" href="https://www.instagram.com/barberroom.id/"><i class="fab fa-instagram"></i></a><a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-linkedin-in"></i></a>
                     </div>
-                    <div class="col-lg-4 text-lg-right"><a class="btn btn-light btn-sm" href="login.php" role="button">Login</a></div>
+                    <div class="col-lg-4 text-lg-right"><a class="btn btn-light btn-sm" href="login" role="button">Login</a></div>
                 </div>
             </div>
         </footer>
