@@ -6,10 +6,9 @@ if (!isset($_SESSION['login'])) {
     header('Location: ../login');
     exit;
 }
-
 require 'functions.php';
 
-$customer = query("SELECT * FROM customer");
+$booking = query("SELECT * FROM booking");
 
 ?>
 
@@ -22,7 +21,7 @@ $customer = query("SELECT * FROM customer");
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Barber Room Dashboard</title>
+    <title>Booking</title>
     <link rel="icon" type="image/x-icon" href="../assets/img/logo.jpg" />
     <link href="../css/styles-admin.css" rel="stylesheet" />
     <link href="../css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
@@ -96,72 +95,13 @@ $customer = query("SELECT * FROM customer");
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid">
-                    <h1 class="mt-4">Dashboard</h1>
+                    <h1 class="mt-4">Booking</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Dashboard</li>
+                        <li class="breadcrumb-item"><a href="dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Booking</li>
                     </ol>
-                    <div class="row">
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">
-                                    <h4>Attendance</h4>
-                                </div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="attendance">Add Customer Attendance</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-secondary text-white mb-4">
-                                <div class="card-body">
-                                    <h4>Customer</h4>
-                                </div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="customer">Show Customer Database</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-success text-white mb-4">
-                                <div class="card-body">
-                                    <h4>Barber</h4>
-                                </div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="barber">Show Barber Database</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-info text-white mb-4">
-                                <div class="card-body">
-                                    <h4>Register</h4>
-                                </div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="add-customer">Register New Customer</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="card mb-4">
-                                <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Cuts</div>
-                                <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="card mb-4">
-                                <div class="card-header"><i class="fas fa-chart-bar mr-1"></i>Revenue</div>
-                                <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="card mb-4">
-                        <div class="card-header"><i class="fas fa-table mr-1"></i>Database Customer</div>
+                        <div class="card-header"><i class="fas fa-table mr-1"></i>Booking Database</div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -169,20 +109,38 @@ $customer = query("SELECT * FROM customer");
                                         <tr>
                                             <th>Nama</th>
                                             <th>Nomor HP</th>
-                                            <th>Birth Date</th>
-                                            <th>Exp</th>
-
+                                            <th>Booking Date</th>
+                                            <th>Pesan</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php $i = 1; ?>
-                                        <?php foreach ($customer as $data) : ?>
+                                        <?php foreach ($booking as $data) : ?>
                                             <tr>
                                                 <td><?= $data['nama']; ?></td>
                                                 <td><?= $data['no_telp']; ?></td>
-                                                <td><?= $data['birth']; ?></td>
-                                                <td><?= $data['exp']; ?></td>
-
+                                                <td><?= $data['date']; ?></td>
+                                                <td><?= $data['pesan']; ?></td>
+                                                <?php
+                                                switch ($data['status']) {
+                                                    case 1:
+                                                        $status = "<div class='text-muted'></div>Done";
+                                                        break;
+                                                    case 0:
+                                                        $status = "<strong class='text-danger'>Undone</strong>";
+                                                        break;
+                                                }
+                                                ?>
+                                                <td><?= $status; ?></td>
+                                                <td>
+                                                    <?php if ($data['status'] == 0) : ?>
+                                                        <a class="btn btn-success btn-sm" href="makeDone.php?done=<?= $data['id']; ?>" onclick="return confirm('Konfirmasi selesai booking <?= $data['nama']; ?>?')">Done</a>
+                                                    <?php else : ?>
+                                                        <button class="btn btn-secondary btn-sm" href="#" disabled>Done</a>
+                                                        <?php endif; ?>
+                                                </td>
                                             </tr>
                                             <?php $i++; ?>
                                         <?php endforeach; ?>
@@ -207,6 +165,44 @@ $customer = query("SELECT * FROM customer");
             </footer>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Customer</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="update.php" method="POST" id="form">
+                        <input type="hidden" name="id" id="id" value="id">
+                        <div class="form-group">
+                            <label for="nama">Nama</label>
+                            <input type="text" class="form-control" id="nama" name="nama">
+                        </div>
+                        <div class="form-group">
+                            <label for="no_telp">Nomor</label>
+                            <input type="text" class="form-control" id="no_telp" name="no_telp">
+                        </div>
+                        <div class="form-group">
+                            <label for="birth">Ulang Tahun</label>
+                            <input class="form-control" type="date" id="birth" name="birth">
+                        </div>
+                        <div class="form-group">
+                            <label for="exp">Experience</label>
+                            <input type="number" class="form-control" id="exp" name="exp">
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" name="edit">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="../js/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
     <script src="../js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="../js/scripts-admin.js"></script>
@@ -216,6 +212,30 @@ $customer = query("SELECT * FROM customer");
     <script src="../vendor/DataTables/DataTables-1.10.21/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="../vendor/DataTables/DataTables-1.10.21/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
     <script src="../assets/demo/datatables-demo.js"></script>
+    <script>
+        $('#dataTable').dataTable({
+            "order": [
+                [4, "desc"],
+                [2, "asc"]
+            ],
+            "columnDefs": [{
+                "orderable": false,
+                "targets": 5
+            }, {
+                "width": "15%",
+                "targets": 4
+            }, {
+                "width": "20%",
+                "targets": 0
+            }, {
+                "width": "25%",
+                "targets": 3
+            }, {
+                "width": "10%",
+                "targets": 5
+            }]
+        });
+    </script>
 </body>
 
 </html>

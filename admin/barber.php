@@ -72,6 +72,9 @@ $barber = query("SELECT * FROM barber");
                         </a><a class="nav-link" href="barber">
                             <div class="sb-nav-link-icon"><i class="fas fa-id-card-alt"></i></div>
                             Barber
+                        </a><a class="nav-link" href="showBooking">
+                            <div class="sb-nav-link-icon"><i class="fas fa-calendar-alt"></i></div>
+                            Booking
                         </a>
                         <div class="sb-sidenav-menu-heading">Registration</div>
                         <a class="nav-link" href="add-customer">
