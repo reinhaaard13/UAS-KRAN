@@ -9,13 +9,14 @@ if (isset($_POST['booking'])) {
     $date = $_POST['date'];
     $pesan = $_POST['pesan'];
 
-    $query = "INSERT INTO booking VALUES ('','$nama','$no_telp','$date','$pesan')";
+    $query = "INSERT INTO booking VALUES ('','$nama','$no_telp','$date','$pesan','0')";
     mysqli_query($conn, $query);
 
-    QRcode::png("$nama - $no_telp - $date", "bookqr.png", "M", 3, 3);
+    $namaDepan = explode(" ", $nama);
+    QRcode::png("$nama - $no_telp - $date", "QRs/qr$namaDepan[0].png", "M", 3, 3);
 }
 
-$namaDepan = explode(" ", $nama);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,7 +63,7 @@ $namaDepan = explode(" ", $nama);
                                             <p class="lead">Nomor Handphone : <br><strong><?= $no_telp; ?></strong></p>
                                             <p class="lead">Waktu Booking : <br><strong><?= $date; ?></strong></p>
                                             <p class="lead">Pesan : <br><strong><?= $pesan; ?></strong></p>
-                                            <?php echo "<img src='bookqr.png'/>" ?><br>
+                                            <?php echo "<img src='QRs/qr$namaDepan[0].png'/>" ?><br>
                                             <a class="btn btn-secondary my-2 btn-sm" href="index" role="button">Back to home</a>
                                         </div>
                                     </div>
